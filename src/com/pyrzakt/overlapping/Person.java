@@ -11,10 +11,8 @@ public class Person {
         private String teamName;
         private double salary;
         private int subscriptionNumber;
-        private EnumSet<PersonType> personKind = EnumSet.of(PersonType.Person);
 
-
-
+        private EnumSet<PersonType> personKind = EnumSet.of(PersonType.Person); //dyskryminator
 
     public Person(String firstName, String lastName, String teamName, EnumSet<PersonType> personTypes) {
         setFirstName(firstName);

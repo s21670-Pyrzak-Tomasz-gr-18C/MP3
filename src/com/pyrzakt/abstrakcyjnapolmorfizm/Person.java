@@ -51,6 +51,7 @@ public abstract class Person {
             this.phoneNumber = phoneNumber;
         }
     }
+
     public abstract void giveVIPStatus(Client client);
 
 

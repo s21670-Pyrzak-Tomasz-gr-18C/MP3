@@ -1,4 +1,6 @@
-package com.pyrzakt.overlappingkompozycja;
+package com.pyrzakt.dziedziczeniedynamicznekompozycja;
+
+
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,21 +21,13 @@ public class Waist {
         setiD(counter);
         waists.add(this);
     }
-        //gettery settery atrybutów
+    //gettery settery atrybutów
 
-    public com.pyrzakt.overlappingkompozycja.Person getPerson() {
+    public Person getPerson() {
         return person;
     }
 
 
-    public Waist getWeist(int id) throws Exception {
-        for (Waist waist: waists) {
-            if(waist.iD == id){
-                return waist;
-            }
-        }
-        throw new Exception("Nie znaleziono kibica o podanym id");
-    }
 
     private void setiD(int counter) {
         this.iD = counter;
@@ -53,8 +47,11 @@ public class Waist {
     }
 
     private void setPerson(Person person){
+        if(person.getPlayer()!=null){
+            person.setPlayer(null);
+        }
         this.person = person;
-        person.addWaist(this);
+        person.setWaist(this);
     }
 
     // obsługa ekstensji
@@ -62,11 +59,12 @@ public class Waist {
         return java.util.Collections.unmodifiableList(waists.stream().toList());
     }
 
+
     public static boolean removeWaist(Waist waist) throws Exception{
         if(waist == null || !waists.contains(waist)){
             return false;
         }
-        if(waist.getPerson().hasWaist(waist)){
+        if(waist.getPerson().getWaist().equals(waist)){
             waists.remove(waist);
             waist.getPerson().removeWaist(waist);
             return true;
@@ -79,7 +77,6 @@ public class Waist {
         return "Waist{" +
                 "iD=" + iD +
                 ", subscriptionNumber=" + subscriptionNumber +
-                ", person=" + person +
                 '}';
     }
 }

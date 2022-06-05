@@ -1,25 +1,21 @@
-package com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy;
+package com.pyrzakt.dziedziczeniedynamicznekompozycja;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Person {
+    private String firstName;
+    private String lastName;
+    private String teamName;
+    private Player player; //Kompozycja całość
+    private Waist waist;   //Kompozycja całość
 
-    protected String firstName;
-    protected String lastName;
-    protected String teamName;
-
-
-    private static Set<Person> persons = new HashSet<Person>();
+    private static Set<Person> persons = new HashSet<>();
 
     public Person(String firstName, String lastName, String teamName) {
         setFirstName(firstName);
         setLastName(lastName);
         setTeamName(teamName);
-        if (persons.contains(this)) {
-            Person.removePerson(this);
-        }
         persons.add(this);
     }
 
@@ -58,15 +54,39 @@ public class Person {
         this.teamName = teamName;
     }
 
-    public static void removePerson(Person person){
-        if (person!=null && persons.contains(person)){
-            persons.remove(person);
-        }
+
+    //Obsługa kompozycji
+
+    public void setPlayer(Player player) {
+            this.player = player;
+
     }
 
-    //obsługa ekstensji
-    public static List<Person> getPersons() {
-        return java.util.Collections.unmodifiableList(persons.stream().toList());
+    public void setWaist(Waist waist) {
+            this.waist = waist;
+    }
+
+    public boolean removePlayer(Player player) throws Exception {
+        if(player!= null && !this.player.equals(player)){
+            Player.removePlayer(player);
+            return true;
+        }
+        return false;
+    }
+    public boolean removeWaist(Waist waist) throws Exception {
+        if(waist!= null && !this.waist.equals(waist)){
+            Waist.removeWaist(waist);
+            return true;
+        }
+        return false;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Waist getWaist() {
+        return waist;
     }
 
     @Override
@@ -75,6 +95,8 @@ public class Person {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", teamName='" + teamName + '\'' +
+                ", player=" + (player!=null) +
+                ", waist=" + (waist!=null) +
                 '}';
     }
 }

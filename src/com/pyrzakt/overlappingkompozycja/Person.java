@@ -1,5 +1,6 @@
 package com.pyrzakt.overlappingkompozycja;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,33 +10,20 @@ public class Person {
     private String firstName;
     private String lastName;
     private String teamName;
-    private Set<Player> player;
-    private Set<Waist> waist;
+    private Set<Player> players; //Kompozycja całość liczność *
+    private Set<Waist> waists;   //Kompozycja całość liczność *
 
     private static Set<Person> persons = new HashSet<>();
-
-    public Person(String firstName, String lastName, String teamName, Player player) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setTeamName(teamName);
-        setPlayer(player);
-        persons.add(this);
-    }
-
-    public Person(String firstName, String lastName, String teamName, Waist waist) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setTeamName(teamName);
-        setWaist(waist);
-        persons.add(this);
-    }
 
     public Person(String firstName, String lastName, String teamName) {
         setFirstName(firstName);
         setLastName(lastName);
         setTeamName(teamName);
+        this.players = new HashSet<Player>();
+        this.waists = new HashSet<Waist>();
         persons.add(this);
     }
+
 
 
     public String getFirstName() {
@@ -73,34 +61,59 @@ public class Person {
         this.teamName = teamName;
     }
 
-    public Set<Player> getPlayer() {
-        return player;
-    }
 
-    private void setPlayer(Player player) {
-        if (player == null){
-         throw new NullPointerException("player nie może być null");
-        }else {
-            this.player.add(player);
+    //Obsługa kompozycji
+
+    public void addWaist(Waist waist){
+        if(!waists.contains(waist)){
+            this.waists.add(waist);
         }
     }
 
-//    public Waist getWaist(int id) {
-//        for (Waist waist :waist) {
-//            if(waist = )
-//        }
-//        return waist;
-//    }
-
-    private void setWaist(Waist waist) {
-        if(waist == null){
-            throw new NullPointerException("kibic nie może być null");
-        }else {
-            this.waist.add(waist);
+    public void addPlayer(Player player){
+        if(!players.contains(player)){
+            this.players.add(player);
         }
+    }
+
+    public Player getPlayer(int iD) throws Exception {
+        for (Player player: players) {
+            if (player.iD==iD){
+                return  player;
+            }
+        }
+        throw new Exception("Nie znaleziono zawodnika o podanym id");
+    }
+    public Waist getWaist(int iD) throws Exception {
+        for (Waist waist: waists) {
+            if(waist.iD == iD){
+                return waist;
+            }
+        }
+        throw new Exception("Nie znaleziono kibica o podanym id");
+    }
+
+    public boolean removePlayer(Player player) throws Exception {
+        if(player!= null && hasPlayer(player)){
+            Player.removePlayer(player);
+            return true;
+        }
+        return false;
+    }
+    public boolean removeWaist(Waist waist) throws Exception {
+        if(waist!= null && hasWaist(waist)){
+            Waist.removeWaist(waist);
+            return true;
+        }
+        return false;
     }
 
     public boolean hasWaist(Waist waist){
-        return this.waist.contains(waist);
+        return this.waists.contains(waist);
     }
+    public boolean hasPlayer(Player player){
+        return this.waists.contains(player);
+    }
+
+
 }

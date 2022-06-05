@@ -1,4 +1,5 @@
-package com.pyrzakt.overlappingkompozycja;
+package com.pyrzakt.dziedziczeniedynamicznekompozycja;
+
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,18 +14,16 @@ public class Player {
     private static Set<Player> players = new HashSet<>();
 
     public Player(double salary, Person person) {
+        setPerson(person);
         setSalary(salary);
         counter++;
         setiD(counter);
         players.add(this);
-        setPerson(person);
     }
-
-
     //gettery settery atrybutów
 
 
-    public com.pyrzakt.overlappingkompozycja.Person getPerson() {
+    public Person getPerson() {
         return person;
     }
 
@@ -64,7 +63,7 @@ public class Player {
         if(player == null || !players.contains(player)){
             return false;
         }
-        if(player.getPerson().hasPlayer(player)){
+        if(player.getPerson().getPlayer().equals(player)){
             players.remove(player);
             player.getPerson().removePlayer(player);
             return true;
@@ -73,10 +72,18 @@ public class Player {
     }
 
     private void setPerson(Person person){
+        if(person.getWaist()!=null){
+            person.setWaist(null);
+        }
         this.person = person;
-        person.addPlayer(this);
+        person.setPlayer(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "salary=" + salary +
+                ", iD=" + iD +
+                '}';
     }
 }
-
-
-

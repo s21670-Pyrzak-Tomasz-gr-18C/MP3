@@ -2,9 +2,9 @@ package com.pyrzakt;
 
 import com.pyrzakt.abstrakcyjnapolmorfizm.Admnistrator;
 import com.pyrzakt.abstrakcyjnapolmorfizm.Client;
+import com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy.Player;
 import com.pyrzakt.overlapping.Person;
 import com.pyrzakt.overlapping.PersonType;
-import com.pyrzakt.overlappingkompozycja.Player;
 import com.pyrzakt.overlappingkompozycja.Waist;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.EnumSet;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
     // klasa abstrakcyjna/ polimorfizm metod
         Calendar c = Calendar.getInstance();
@@ -49,11 +49,42 @@ public class Main {
            e.printStackTrace();
        }
 
-       //  dziedziczenie typu overlapping zastąpienie kompozycją
+        System.out.println("------------------------------------------------------");
 
-        com.pyrzakt.overlappingkompozycja.Person person = new com.pyrzakt.overlappingkompozycja.Person("Adam", "Nowy","Klopsy",new Waist(4765));
-        person.getWaist(1).setSubscriptionNumber(7898);
-        System.out.println(person.getWaist(1).getSubscriptionNumber());
+       //  dziedziczenie typu overlapping zastąpienie kompozycją
+        com.pyrzakt.overlappingkompozycja.Person person = new com.pyrzakt.overlappingkompozycja.Person("Adam", "Nowy","Klopsy");
+       Waist waist1 = new Waist(7898,person);
+       System.out.println(waist1.toString());
+       System.out.println("Numer karnetu dla kibica waist1: "+person.getWaist(1).getSubscriptionNumber());
+        System.out.println("------------------------------------------------------");
+
+        // dziedziczenie dynamiczne konstruktor kopiujacy
+        com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy.Person person1 = new com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy.Person("Marcin","Kartofel","Kocury");
+        System.out.println("Ekstensja klasy Person: "+com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy.Person.getPersons());
+        Player player1 = new Player(person1,5500);
+        System.out.println("Ekstensja klasy Person po zmianie Obiektu na Player: "+com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy.Person.getPersons());
+
+        System.out.println("------------------------------------------------------");
+
+        //dziedziczemie dynamiczne spłasczenie hierarchii
+        com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.Person person2 = new com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.Person("Aleksander","Wielki","Zwycięzcy", com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.PersonType.Coach);
+        person2.setSalary(8000);
+        System.out.println("Ekstensja klasy Person"+ com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.Person.getPersons().toString());
+        person2.changePersonType(com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.PersonType.Waist);
+        person2.setSubscriptionNumber(43576);
+        System.out.println("Ekstensja klasy Person"+ com.pyrzakt.dziadziczeniedynamiczne.splasczeniehierarchii.Person.getPersons().toString());
+        System.out.println("------------------------------------------------------");
+
+        //dziedziczenie dynamiczne kompozycja
+        com.pyrzakt.dziedziczeniedynamicznekompozycja.Person person3 = new com.pyrzakt.dziedziczeniedynamicznekompozycja.Person("Alicja", "Bąk", "Bąkojady");
+        com.pyrzakt.dziedziczeniedynamicznekompozycja.Player player3 = new com.pyrzakt.dziedziczeniedynamicznekompozycja.Player(10000,person3);
+        System.out.println(person3.toString());
+        com.pyrzakt.dziedziczeniedynamicznekompozycja.Waist waist = new com.pyrzakt.dziedziczeniedynamicznekompozycja.Waist(763465834,person3);
+        System.out.println(person3.toString());
+
+
+
+
 
 
 
