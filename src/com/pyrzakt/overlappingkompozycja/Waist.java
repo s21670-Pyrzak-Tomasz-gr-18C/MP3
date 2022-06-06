@@ -3,6 +3,7 @@ package com.pyrzakt.overlappingkompozycja;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Waist {
     protected int iD;
@@ -59,7 +60,7 @@ public class Waist {
 
     // obsługa ekstensji
     public static List<Waist> getWaists() {
-        return java.util.Collections.unmodifiableList(waists.stream().toList());
+        return java.util.Collections.unmodifiableList(waists.stream().collect(Collectors.toList()));
     }
 
     public static boolean removeWaist(Waist waist) throws Exception{

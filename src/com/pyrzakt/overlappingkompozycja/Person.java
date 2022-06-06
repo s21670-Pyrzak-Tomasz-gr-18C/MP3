@@ -10,8 +10,8 @@ public class Person {
     private String firstName;
     private String lastName;
     private String teamName;
-    private Set<Player> players; //Kompozycja całość liczność *
-    private Set<Waist> waists;   //Kompozycja całość liczność *
+    private Set<Player> players; //Kompozycja
+    private Set<Waist> waists;   //Kompozycja
 
     private static Set<Person> persons = new HashSet<>();
 

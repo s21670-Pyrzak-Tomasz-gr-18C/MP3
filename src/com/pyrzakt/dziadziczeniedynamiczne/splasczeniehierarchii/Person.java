@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Person {
 
@@ -119,7 +120,7 @@ public class Person {
     }
 
     public static List<Person> getPersons() {
-        return java.util.Collections.unmodifiableList(persons.stream().toList());
+        return java.util.Collections.unmodifiableList(persons.stream().collect(Collectors.toList()));
     }
 
     @Override

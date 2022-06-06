@@ -1,4 +1,4 @@
-package com.pyrzakt.dzidziczenedynamiczne.konstruktorkopiujacy;
+package com.pyrzakt.wielodziedziczenie;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 public class Person {
 
-    protected String firstName;
-    protected String lastName;
-    protected String teamName;
+
+    private String firstName;
+    private String lastName;
+    private String teamName;
+
 
 
     private static Set<Person> persons = new HashSet<Person>();
@@ -18,9 +20,6 @@ public class Person {
         setFirstName(firstName);
         setLastName(lastName);
         setTeamName(teamName);
-        if (persons.contains(this)) {
-            Person.removePerson(this);
-        }
         persons.add(this);
     }
 
@@ -57,12 +56,6 @@ public class Person {
             throw new IllegalArgumentException("Podano nieprawidłową nazwę drużyny");
         }
         this.teamName = teamName;
-    }
-
-    public static void removePerson(Person person){
-        if (person!=null && persons.contains(person)){
-            persons.remove(person);
-        }
     }
 
     //obsługa ekstensji

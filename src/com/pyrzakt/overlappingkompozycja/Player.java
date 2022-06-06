@@ -3,6 +3,7 @@ package com.pyrzakt.overlappingkompozycja;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Player {
     private double salary;
@@ -57,7 +58,7 @@ public class Player {
 
     // obsługa ekstensji
     public static List<Player> getPlayers() {
-        return java.util.Collections.unmodifiableList(players.stream().toList());
+        return java.util.Collections.unmodifiableList(players.stream().collect(Collectors.toList()));
     }
 
     public static boolean removePlayer(Player player) throws Exception{
